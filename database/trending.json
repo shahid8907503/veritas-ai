@@ -1,0 +1,38 @@
+[
+  {
+    "id": "t1",
+    "title": "Global warming reversed in 24 hours due to planetary alignment",
+    "category": "Propaganda",
+    "shares": "125K",
+    "verification": "Debunked by NASA - climate science is unaffected by alignments.",
+    "credibility": 12,
+    "date": "2026-06-17"
+  },
+  {
+    "id": "t2",
+    "title": "Health ministry advises eating raw onions to build 100% immunity against viruses",
+    "category": "Fake News",
+    "shares": "85K",
+    "verification": "Debunked by WHO - no scientific basis for raw onion immunization.",
+    "credibility": 8,
+    "date": "2026-06-15"
+  },
+  {
+    "id": "t3",
+    "title": "Scientists find ancient mechanical device under the sands of Egypt",
+    "category": "Misleading News",
+    "shares": "42K",
+    "verification": "Half-true - Archaeologists found a gear-like bronze calendar, not a high-tech machine.",
+    "credibility": 45,
+    "date": "2026-06-14"
+  },
+  {
+    "id": "t4",
+    "title": "Local mayor declares weekend is now 3 days long starting next month",
+    "category": "Satire",
+    "shares": "30K",
+    "verification": "Confirmed Satire - Published originally by a local comedy blog.",
+    "credibility": 80,
+    "date": "2026-06-18"
+  }
+]

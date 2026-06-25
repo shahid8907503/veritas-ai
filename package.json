@@ -1,0 +1,16 @@
+{
+  "name": "fake-news-detector-root",
+  "version": "1.0.0",
+  "description": "AI-Powered Fake News Detection System",
+  "main": "index.js",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev:ai": "cd ai-service && py -3.12 -m venv venv && venv\\Scripts\\pip install -r requirements.txt && venv\\Scripts\\python app.py",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

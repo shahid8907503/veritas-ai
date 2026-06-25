@@ -1,0 +1,273 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ctp-rosewater: #f5e0dc;
+  --ctp-flamingo: #f2cdcd;
+  --ctp-pink: #f5c2e7;
+  --ctp-mauve: #cba6f7;
+  --ctp-red: #f38ba8;
+  --ctp-maroon: #eba0ac;
+  --ctp-peach: #fab387;
+  --ctp-yellow: #f9e2af;
+  --ctp-green: #a6e3a1;
+  --ctp-teal: #94e2d5;
+  --ctp-sky: #89dceb;
+  --ctp-sapphire: #74c7ec;
+  --ctp-blue: #89b4fa;
+  --ctp-lavender: #b4befe;
+  --ctp-text: #cdd6f4;
+  --ctp-subtext1: #bac2de;
+  --ctp-subtext0: #a6adc8;
+  --ctp-overlay2: #9399b2;
+  --ctp-overlay1: #7f849c;
+  --ctp-overlay0: #6c7086;
+  --ctp-surface2: #585b70;
+  --ctp-surface1: #45475a;
+  --ctp-surface0: #313244;
+  --ctp-base: #11111b; /* Rich dark catppuccin crust */
+}
+
+html {
+  background-color: var(--ctp-base);
+}
+
+@layer base {
+  body {
+    background-color: transparent;
+    background-image: 
+      /* Moving dot grid pattern (css-doodle inspired) */
+      radial-gradient(circle at 1px 1px, rgba(180, 190, 254, 0.04) 1.5px, transparent 0),
+      /* Nebula glows */
+      radial-gradient(at 10% 20%, rgba(203, 166, 247, 0.08) 0px, transparent 50%),
+      radial-gradient(at 90% 80%, rgba(116, 199, 236, 0.08) 0px, transparent 50%);
+    background-size: 28px 28px, 100% 100%, 100% 100%;
+    background-attachment: fixed;
+  }
+}
+
+/* Custom glassmorphism cards */
+.glass-panel {
+  background: rgba(17, 19, 29, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-hover:hover {
+  background: rgba(22, 25, 39, 0.85);
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(99, 102, 241, 0.1), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Text highlighting categories */
+.highlight-clickbait {
+  background-color: rgba(139, 92, 246, 0.25);
+  border-bottom: 2px solid rgb(139, 92, 246);
+  padding: 0 2px;
+  cursor: help;
+}
+
+.highlight-propaganda {
+  background-color: rgba(236, 72, 153, 0.25);
+  border-bottom: 2px solid rgb(236, 72, 153);
+  padding: 0 2px;
+  cursor: help;
+}
+
+.highlight-emotional {
+  background-color: rgba(239, 68, 68, 0.25);
+  border-bottom: 2px solid rgb(239, 68, 68);
+  padding: 0 2px;
+  cursor: help;
+}
+
+/* Animated gradient text */
+.glow-text {
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0b10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Orbit Loader Spinner from Uiverse */
+.orbit-spinner {
+  position: relative;
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  perspective: 800px;
+}
+
+.orbit {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;  
+}
+
+.orbit:nth-child(1) {
+  left: 0%;
+  top: 0%;
+  animation: orbit-rotate-one 1.2s linear infinite;
+  border-bottom: 3px solid #818cf8;
+}
+
+.orbit:nth-child(2) {
+  right: 0%;
+  top: 0%;
+  animation: orbit-rotate-two 1.2s linear infinite;
+  border-right: 3px solid #c084fc;
+}
+
+.orbit:nth-child(3) {
+  right: 0%;
+  bottom: 0%;
+  animation: orbit-rotate-three 1.2s linear infinite;
+  border-top: 3px solid #22d3ee;
+}
+
+@keyframes orbit-rotate-one {
+  0% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg); }
+  100% { transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg); }
+}
+
+@keyframes orbit-rotate-two {
+  0% { transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg); }
+  100% { transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg); }
+}
+
+@keyframes orbit-rotate-three {
+  0% { transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg); }
+  100% { transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg); }
+}
+
+/* Neon Border Card from Uiverse */
+.neon-border-card {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  padding: 1px; /* The size of the border */
+  background: transparent;
+  display: flex;
+}
+
+.neon-border-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 180deg,
+    #6366f1 0deg,
+    #a855f7 90deg,
+    #22d3ee 180deg,
+    #a855f7 270deg,
+    #6366f1 360deg
+  );
+  animation: rotate-gradient-border 4s linear infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.neon-border-card-inner {
+  position: relative;
+  width: 100%;
+  background: rgba(15, 17, 26, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 0.95rem;
+  z-index: 10;
+}
+
+@keyframes rotate-gradient-border {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Custom premium scrollbar for catppuccin theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ctp-crust);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ctp-surface1);
+  border-radius: 6px;
+  border: 2px solid var(--ctp-crust);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ctp-lavender);
+}
+
+/* Animated css-doodle inspired nebula gradients in background */
+.nebula-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: -1;
+  mix-blend-mode: screen;
+}
+
+.nebula-glow-pink {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--ctp-pink), transparent 70%);
+  top: 10%;
+  left: 20%;
+  animation: nebula-float-x 25s ease-in-out infinite alternate;
+}
+
+.nebula-glow-teal {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--ctp-teal), transparent 70%);
+  bottom: 10%;
+  right: 15%;
+  animation: nebula-float-y 30s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-float-x {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(80px, 40px) scale(1.1); }
+}
+
+@keyframes nebula-float-y {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-60px, -50px) scale(1.05); }
+}
+
+
+
