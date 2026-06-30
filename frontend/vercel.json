@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://veritas-ai-backend-j1gm.onrender.com/api/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
     }
   ]
 }
