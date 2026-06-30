@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { MongoClient } = require('mongodb');
+const crypto = require('crypto');
+
 
 const DB_DIR = path.join(__dirname, '../../database');
 const USERS_FILE = path.join(DB_DIR, 'users.json');
@@ -130,14 +132,31 @@ const db = {
   getUsers: () => {
     try {
       const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
-      return users.map(u => {
+      let modified = false;
+
+      const normalizedUsers = users.map(u => {
         const verifiedVal = u.emailVerified !== undefined ? u.emailVerified : u.isVerified;
+        
+        let idVal = u.id;
+        if (!idVal) {
+          // Generate a deterministic unique ID based on email so it's stable
+          idVal = crypto.createHash('md5').update(u.email).digest('hex');
+          modified = true;
+        }
+
         return {
           ...u,
+          id: idVal,
           emailVerified: !!verifiedVal,
           isVerified: !!verifiedVal
         };
       });
+
+      if (modified) {
+        fs.writeFileSync(USERS_FILE, JSON.stringify(normalizedUsers, null, 2));
+      }
+
+      return normalizedUsers;
     } catch (e) {
       return [];
     }
