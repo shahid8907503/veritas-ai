@@ -107,7 +107,7 @@ export default function App() {
             <div className="bg-amber-500/10 border-b border-amber-500/20 py-2.5 px-4 text-center text-xs text-amber-400 flex items-center justify-center gap-2">
               <AlertTriangle className="h-4 w-4 shrink-0" />
               <span>
-                Your email address is unverified. Please check your console log to retrieve the verification link.
+                Your email address is unverified. Please check your email inbox (or spam folder) to retrieve the verification link.
               </span>
             </div>
           )}
