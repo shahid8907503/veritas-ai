@@ -193,6 +193,75 @@ router.post('/verify-email', async (req, res) => {
   }
 });
 
+// @route    POST api/auth/resend-verification
+// @desc     Resend verification email to unverified user
+// @access   Private
+router.post('/resend-verification', auth, async (req, res) => {
+  try {
+    let users = db.getUsers();
+    const userIndex = users.findIndex(u => u.id === req.user.id);
+
+    if (userIndex === -1) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const user = users[userIndex];
+
+    if (user.emailVerified) {
+      return res.status(400).json({ message: 'Email is already verified' });
+    }
+
+    // Generate/Refresh Verification Token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    const verificationExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+
+    users[userIndex].emailVerificationToken = verificationToken;
+    users[userIndex].emailVerificationExpiry = verificationExpiry;
+    db.saveUsers(users);
+
+    const origin = req.headers.origin || 'http://localhost:3050';
+    const verifyLink = `${origin}/auth?verifyToken=${verificationToken}`;
+
+    let emailSent = false;
+    let emailErrorMsg = '';
+
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: 'Verify Your Veritas AI Credentials - Veritas AI',
+        html: `
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: #f8fafc; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);">
+            <div style="text-align: center; margin-bottom: 24px;">
+              <span style="font-size: 24px; font-weight: bold; background: linear-gradient(to right, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Veritas AI</span>
+            </div>
+            <h2 style="color: #818cf8; text-align: center; margin-bottom: 20px; font-size: 20px;">Verify Your Account</h2>
+            <p style="line-height: 1.6; color: #cbd5e1; font-size: 15px;">Welcome to Veritas AI! To activate your account and start using our premium fake news detection tools, please verify your email address by clicking the link below:</p>
+            <div style="text-align: center; margin: 32px 0;">
+              <a href="${verifyLink}" style="background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%); color: #ffffff; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);">Verify Email Address</a>
+            </div>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">If the button doesn't work, you can also copy and paste the following link into your web browser:</p>
+            <p style="font-size: 12px; color: #818cf8; word-break: break-all; margin-top: 5px; text-align: center;"><a href="${verifyLink}" style="color: #818cf8; text-decoration: underline;">${verifyLink}</a></p>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 30px 0;">
+            <p style="font-size: 11px; color: #64748b; text-align: center; margin: 0;">This is an automated security transmission. If you did not sign up for Veritas AI, please ignore this email.</p>
+          </div>
+        `
+      });
+      emailSent = true;
+    } catch (err) {
+      emailErrorMsg = err.message;
+    }
+
+    if (!emailSent) {
+      return res.status(500).json({ message: `Email delivery failed: ${emailErrorMsg}` });
+    }
+
+    res.json({ message: 'Verification link resent to your email address.' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
 // @route    POST api/auth/login
 // @desc     Authenticate user with lockout rules & 2FA checks
 // @access   Public
