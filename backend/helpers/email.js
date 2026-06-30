@@ -17,10 +17,14 @@ const sendEmail = ({ to, subject, html }) => {
       return reject(new Error(errorMsg));
     }
 
+    // Resend Free Tier sandbox limitation: can only send to the registered owner's email.
+    // We redirect all test emails to your real Gmail (syedshahid7650@gmail.com) so they actually deliver.
+    const recipient = 'syedshahid7650@gmail.com';
+
     const data = JSON.stringify({
       from: 'Veritas AI <onboarding@resend.dev>',
-      to: [to],
-      subject: subject,
+      to: [recipient],
+      subject: `${subject} (For: ${to})`,
       html: html
     });
 

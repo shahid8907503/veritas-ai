@@ -129,7 +129,15 @@ async function syncDataFromMongo() {
 const db = {
   getUsers: () => {
     try {
-      return JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
+      const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
+      return users.map(u => {
+        const verifiedVal = u.emailVerified !== undefined ? u.emailVerified : u.isVerified;
+        return {
+          ...u,
+          emailVerified: !!verifiedVal,
+          isVerified: !!verifiedVal
+        };
+      });
     } catch (e) {
       return [];
     }
